@@ -1,0 +1,12 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/login": "pages/login.js",
+  "/candidates-dashboard/dashboard": "pages/candidates-dashboard/dashboard.js",
+  "/candidates-dashboard/my-profile": "pages/candidates-dashboard/my-profile.js",
+  "/candidates-dashboard/addskills": "pages/candidates-dashboard/addskills.js",
+  "/candidates-dashboard/addeducation": "pages/candidates-dashboard/addeducation.js",
+  "/candidates-dashboard/additskills": "pages/candidates-dashboard/additskills.js",
+  "/candidates-dashboard/addprojects": "pages/candidates-dashboard/addprojects.js"
+}
