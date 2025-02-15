@@ -471,6 +471,7 @@ const getSignedUrlHandler = async (req, res) => {
         // const viewUrl = await getSignedUrl(s3, getCommand, { expiresIn: 315360000 }); // 10 years expiry
         // Set expiresIn to a maximum of 6 days (518400 seconds)
         const viewUrl = await getSignedUrl(s3, getCommand, { expiresIn: 518400 }); // 6 days expiry
+        // const viewUrl = await getSignedUrl(s3, getCommand); // no expiry
 
         console.log(viewUrl);
 
