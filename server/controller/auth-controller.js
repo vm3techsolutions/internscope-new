@@ -198,10 +198,10 @@ const googleAuthCallback = async (req, res) => {
   // res.redirect("http://localhost:3000/candidates-dashboard/dashboard");
 
   if (req.isAuthenticated()) {
-    res.redirect("http://localhost:3000/candidates-dashboard/dashboard");
+    res.redirect(`${process.env.FRONT_END_URL}/candidates-dashboard/dashboard`);
   }
   else {
-    res.redirect("http://localhost:3000/login")
+    res.redirect(`${process.env.FRONT_END_URL}/login`)
   }
 };
 
@@ -465,7 +465,7 @@ const getLogOut = async (req, res, next) => {
 
   req.logout(function (err) {
     if (err) { return next(err) }
-    res.redirect("http://localhost:3000/login")
+    res.redirect(`${process.env.FRONT_END_URL}/login`)
   })
 }
 

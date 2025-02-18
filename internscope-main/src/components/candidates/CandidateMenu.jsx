@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import dotenv from "dotenv";
+dotenv.config();
 
 function CandidateMenu() {
   const currentPage = useRouter().pathname;
@@ -8,7 +10,9 @@ function CandidateMenu() {
   const logout=()=>{
     localStorage.removeItem("token");
 
-    window.open("http://localhost:4000/api/user/logout","_self")
+    // window.open("http://localhost:4000/api/user/logout","_self")
+    window.open(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/user/logout`, "_self")
+
   }
   return (
     <div className="single-widget mb-60">

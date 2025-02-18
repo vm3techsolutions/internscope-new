@@ -2,6 +2,8 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Layout from "../layout/Layout";
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 
 function Login() {
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -23,7 +25,8 @@ function Login() {
         }
 
         try {
-            const response = await axios.post("http://localhost:4000/api/company/login", {
+            // const response = await axios.post("http://localhost:4000/api/company/login"
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/company/login`, {
                 email,
                 password,
             });
@@ -31,7 +34,9 @@ function Login() {
             if (response.data.success) {
                 alert("Login successful!");
                 localStorage.setItem('token', response.data.token)
-                window.open("http://localhost:3000/company/company-dashboard", "_self")
+                // window.open("http://localhost:3000/company/company-dashboard", "_self")
+                window.open(`${process.env.NEXT_PUBLIC_FRONT_END_URL}/company/company-dashboard`, "_self")
+
                 // window.location.href = "http://localhost:3000/candidates-dashboard/dashboard"; // Redirect to dashboard
 
             } else {

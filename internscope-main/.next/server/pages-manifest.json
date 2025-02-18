@@ -2,7 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/login": "pages/login.js",
-  "/candidates-dashboard/dashboard": "pages/candidates-dashboard/dashboard.js",
-  "/candidates-dashboard/my-profile": "pages/candidates-dashboard/my-profile.js"
+  "/register": "pages/register.js",
+  "/companylogin": "pages/companylogin.js",
+  "/company/company-dashboard": "pages/company/company-dashboard.js",
+  "/404": "pages/404.js"
 }

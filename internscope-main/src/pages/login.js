@@ -2,6 +2,8 @@ import Link from "next/link";
 import React, { useState,useEffect } from "react";
 import Layout from "../layout/Layout";
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 // import "./login.css"
 import "./login.module.css"
 function Login() {
@@ -23,16 +25,19 @@ function Login() {
       return;
     }
 
+    //env3
     try {
-      const response = await axios.post("http://localhost:4000/api/user/login", {
+      // const response = await axios.post("http://localhost:4000/api/user/login"
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/user/login`, {
         email,
         password,
-      });
+            });
 
       if (response.data.success) {
         alert("Login successful!");
         localStorage.setItem('token',response.data.token)
-        window.open("http://localhost:3000/candidates-dashboard/dashboard","_self")
+        // window.open("http://localhost:3000/candidates-dashboard/dashboard","_self")
+        window.open(`${process.env.NEXT_PUBLIC_FRONT_END_URL}/candidates-dashboard/dashboard`, "_self")
         // window.location.href = "http://localhost:3000/candidates-dashboard/dashboard"; // Redirect to dashboard
         
       } else {
@@ -46,7 +51,9 @@ function Login() {
 
   //google
   const Signup=()=>{
-    const response= window.open("http://localhost:4000/api/auth/google","_self");
+    // const response= window.open("http://localhost:4000/api/auth/google","_self");
+    const response = window.open(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/auth/google`, "_self");
+
  
    }
 

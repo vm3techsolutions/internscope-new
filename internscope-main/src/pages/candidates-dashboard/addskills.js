@@ -266,7 +266,7 @@ function MyProfile() {
         return;
       }
 
-      const response = await axios.get("http://localhost:4000/api/user/getSkills", {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/user/getSkills`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -314,7 +314,7 @@ function MyProfile() {
       }
       
       const skillNames = skills.map(skill => skill.value);
-      await axios.post("http://localhost:4000/api/user/updateSkills", { skills: skillNames }, {
+      await axios.post(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/user/updateSkills`, { skills: skillNames }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

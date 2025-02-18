@@ -3,6 +3,8 @@ import Link from "next/link";
 
 
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 
 //
 
@@ -24,7 +26,8 @@ function DefaultContent() {
 
   const getUser = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/user/dashboard", { withCredentials: true });
+      // const response = await axios.get("http://localhost:4000/api/user/dashboard"
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/user/dashboard`, { withCredentials: true });
       console.log("response", response);
       // setuserdata(response.data.user)
       // +
@@ -71,7 +74,7 @@ function DefaultContent() {
         return; // Token is not available, no need to proceed further
       }
   
-      const response = await axios.get("http://localhost:4000/api/user/manual/dashboard", {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/user/manual/dashboard`, {
         headers: { Authorization: `Bearer ${token}` }, // Add token to request headers
       });
   

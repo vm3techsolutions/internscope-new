@@ -7,7 +7,7 @@ function CompanyDashbordMenu() {
   const logout=()=>{
     localStorage.removeItem("token");
 
-    window.open("http://localhost:3000/companylogin","_self")
+    window.open(`${process.env.NEXT_PUBLIC_FRONT_END_URL}/companylogin`, "_self")
   }
   const currentPath = useRouter().pathname;
   return (

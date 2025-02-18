@@ -1,23 +1,24 @@
 import Link from "next/link";
 import React, { useReducer, useState } from "react";
 import Layout from "../layout/Layout";
-
+import dotenv from "dotenv";
+dotenv.config();
 //myinstall//
 //
 
 //
 import axios from "axios";
 
-const ACTIONS={
-  SET_FIRST_NAME:"SET_FIRST_NAME",
-  SET_LAST_NAME:"SET_LAST_NAME",
-  SET_USERNAME:"SET_USERNAME",
-  SET_EMAIL:"SET_EMAIL",
-  SET_PASSWORD:"SET_PASSWORD",
-  TOGGLE_PASSWORD_VISIBILITY:"TOGGLE_PASSWORD_VISIBILITY",
-  SET_CONFIRM_PASSWORD:"SET_CONFIRM_PASSWORD",
-  TOGGLE_CONFIRM_PASSWORD_VISIBILITY:"TOGGLE_CONFIRM_PASSWORD_VISIBILITY",
-  SET_CHECKBOX:"SET_CHECKBOX",
+const ACTIONS = {
+  SET_FIRST_NAME: "SET_FIRST_NAME",
+  SET_LAST_NAME: "SET_LAST_NAME",
+  SET_USERNAME: "SET_USERNAME",
+  SET_EMAIL: "SET_EMAIL",
+  SET_PASSWORD: "SET_PASSWORD",
+  TOGGLE_PASSWORD_VISIBILITY: "TOGGLE_PASSWORD_VISIBILITY",
+  SET_CONFIRM_PASSWORD: "SET_CONFIRM_PASSWORD",
+  TOGGLE_CONFIRM_PASSWORD_VISIBILITY: "TOGGLE_CONFIRM_PASSWORD_VISIBILITY",
+  SET_CHECKBOX: "SET_CHECKBOX",
   RESET_FORM: "RESET_FORM", // New action type
 
 
@@ -31,7 +32,7 @@ const initialState = {
   confirmPassword: "",
   passwordVisible: false,
   confirmPasswordVisible: false,
-  checkbox:false
+  checkbox: false
 };
 
 function reducer(state, action) {
@@ -50,8 +51,8 @@ function reducer(state, action) {
       return { ...state, passwordVisible: !state.passwordVisible };
     case ACTIONS.SET_CONFIRM_PASSWORD:
       return { ...state, confirmPassword: action.payload };
-      case ACTIONS.SET_CHECKBOX:
-        return { ...state, checkbox: action.payload };
+    case ACTIONS.SET_CHECKBOX:
+      return { ...state, checkbox: action.payload };
     case ACTIONS.TOGGLE_CONFIRM_PASSWORD_VISIBILITY:
       return {
         ...state,
@@ -178,8 +179,8 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { firstName, lastName, username, email, password, confirmPassword,checkbox } = state;
-    
+    const { firstName, lastName, username, email, password, confirmPassword, checkbox } = state;
+
 
     console.log(state);
 
@@ -196,21 +197,21 @@ function Register() {
     // })
     // console.log(mystate);
 
-    const apis={
+    const apis = {
       firstName: firstName,
       lastName: lastName,
       username: username,
       email: email,
       password: password,
-      google_id:null,
-      profile_picture:null,
-      oauth_provider:"manual"  // Specify registration type
+      google_id: null,
+      profile_picture: null,
+      oauth_provider: "manual"  // Specify registration type
     }
     console.log(apis);
-    
-    
-    
-    if ( !firstName.trim() || !lastName.trim() ||    !username.trim() ||    !email.trim() ||  !password.trim() || !confirmPassword.trim()|| checkbox===false) {
+
+
+
+    if (!firstName.trim() || !lastName.trim() || !username.trim() || !email.trim() || !password.trim() || !confirmPassword.trim() || checkbox === false) {
       alert("Please fill in all fields");
       return;
     }
@@ -221,226 +222,239 @@ function Register() {
     }
 
     try {
-  
 
-    // console.log(formData);
-    
 
-      const response = await axios.post("http://localhost:4000/api/user/register",apis);
+      // console.log(formData);
+
+      // const response = await axios.post("http://localhost:4000/api/user/register", apis);
+
+      //env demo 6
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/user/register`, apis);
       console.log(response);
-      
+
 
       // if (response.status === 201) {
       //   alert("User registered successfully");
       //   window.open("http://localhost:3000/login","_self")
       // Use the backend response message
-    if (response.status === 201 || response.status === 200) {
-      // Handle specific messages based on the backend response
-      if (response.data.message === "User registered successfully.") {
-        alert(response.data.message);
-        window.open("http://localhost:3000/login", "_self");
-      } else if (response.data.message === "Password set successfully. Account updated.") {
-        alert(response.data.message);
-        window.open("http://localhost:3000/login", "_self");
+      if (response.status === 201 || response.status === 200) {
+        // Handle specific messages based on the backend response
+        if (response.data.message === "User registered successfully.") {
+          alert(response.data.message);
+          // window.open("http://localhost:3000/login", "_self");
+            window.open(`${process.env.NEXT_PUBLIC_FRONT_END_URL}/login`, "_self");
+
+        } else if (response.data.message === "Password set successfully. Account updated.") {
+          alert(response.data.message);
+          // window.open("http://localhost:3000/login", "_self");
+            window.open(`${process.env.NEXT_PUBLIC_FRONT_END_URL}/login`, "_self");
+
+        }
+
+
+        // Reset form fields
+        dispatch({ type: ACTIONS.RESET_FORM });
+
       }
 
 
-      // Reset form fields
-      dispatch({ type: ACTIONS.RESET_FORM });
-        
-      }
-      
-      
     } catch (error) {
       if (error.status === 409) {
         alert("Email or username already exists");
       }
-      else{
+      else {
         alert("Error: " + error);
       }
       // console.log(error);
-      
+
     }
 
-  
+
   };
   // 
-  
-    const Signup=()=>{
-     const response= window.open("http://localhost:4000/api/auth/google","_self");
-  
-    }
-// ++++++++++++++++++++++++++++++++++++++++++++++++ @COMPANY @++++++++++++++++++++++++++++++++++++++++++
- const [companystate, companydispatch] = useReducer(companyReducer, initialCompanyState);
 
-// Handling company form changes
-// Handling company form changes
+  const Signup = () => {
+    // const response = window.open("http://localhost:4000/api/auth/google", "_self");
+    const response = window.open(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/auth/google`, "_self");
 
-const handleChangeCompanyFirstName = (e) => {
-  const { name, value } = e.target;
-  companydispatch({ type: COMPANY_ACTIONS.SET_FIRST_NAME, payload: value });
-};
-
-const handleChangeCompanyLastName = (e) => {
-  const { name, value } = e.target;
-  companydispatch({ type: COMPANY_ACTIONS.SET_LAST_NAME, payload: value });
-};
-
-const handleChangeCompanyUsername = (e) => {
-  const { name, value } = e.target;
-  companydispatch({ type: COMPANY_ACTIONS.SET_USERNAME, payload: value });
-};
-
-const handleChangeCompanyEmail = (e) => {
-  const { name, value } = e.target;
-  companydispatch({ type: COMPANY_ACTIONS.SET_EMAIL, payload: value });
-};
-
-const handleChangeCompanyName = (e) => {
-  const { name, value } = e.target;
-  companydispatch({ type: COMPANY_ACTIONS.SET_COMPANY_NAME, payload: value });
-};
-
-const handleChangeCompanyType = (e) => {
-  const { name, value } = e.target;
-  companydispatch({ type: COMPANY_ACTIONS.SET_COMPANY_TYPE, payload: value });
-};
-
-const handleChangeCompanyPassword = (e) => {
-  const { name, value } = e.target;
-  companydispatch({ type: COMPANY_ACTIONS.SET_PASSWORD, payload: value });
-};
-
-const handleChangeCompanyConfirmPassword = (e) => {
-  const { name, value } = e.target;
-  companydispatch({ type: COMPANY_ACTIONS.SET_CONFIRM_PASSWORD, payload: value });
-};
-
-const handleChangeCompanyCheckbox = (e) => {
-  companydispatch({ type: COMPANY_ACTIONS.SET_CHECKBOX, payload: e.target.checked });
-};
-
-// Password visibility toggle
-
-
-// Submit company form
-// const companyhandleSubmit = async (e) => {
-//   e.preventDefault();
-//   const { firstName, lastName, username, email, companyName, companyType, password, confirmPassword, checkbox } = companystate;
-
-//   if (
-//     !firstName.trim() || !lastName.trim() || !username.trim() ||  !email.trim() || !companyName.trim() || 
-//     !companyType.trim() ||    !password.trim() ||    !confirmPassword.trim() ||     checkbox === false
-//   ) {
-//     alert("Please fill in all fields");
-//     return;
-//   }
-  
-
-//   if (password !== confirmPassword) {
-//     alert("Passwords do not match");
-//     return;
-//   }
-
-
-//   const apis = {
-//     firstName,
-//     lastName,
-//     username,
-//     email,
-//     companyName,
-//     companyType,
-//     password,
-//   };
-
-//   try {
-//     const response = await axios.post("http://localhost:4000/api/company/register", apis);
-
-//     console.log("Response received:", response);
-
-//     if (response.status === 201 || response.status === 200) {
-//       if (response.data.message === "Company registered successfully.") {
-//         alert(response.data.message);
-//         window.open("http://localhost:3000/login", "_self");
-//       }
-
-//       // Reset form
-//       companydispatch({ type: COMPANY_ACTIONS.RESET_FORM });
-//     }
-//   } catch (error) {
-//     console.error("Error response:", error.response?.data || error.message);
-
-//     if (error.response?.status === 409) {
-//       alert("Email or username already exists");
-//     } else {
-//       alert("Error: " + (error.response?.data?.message || error.message));
-//     }
-//   }
-// };
-
-const companyhandleSubmit = async (e) => {
-  e.preventDefault();
-
-  const { firstName, lastName, username, email, companyName, companyType, password, confirmPassword, checkbox } = companystate;
-
-  if (!firstName.trim() || !lastName.trim() || !username.trim() ||  
-      !email.trim() || !companyName.trim() || !companyType.trim() ||  
-      !password.trim() || !confirmPassword.trim() || checkbox === false) {
-    alert("Please fill in all fields");
-    return;
   }
+  // ++++++++++++++++++++++++++++++++++++++++++++++++ @COMPANY @++++++++++++++++++++++++++++++++++++++++++
+  const [companystate, companydispatch] = useReducer(companyReducer, initialCompanyState);
 
-  if (password !== confirmPassword) {
-    alert("Passwords do not match");
-    return;
-  }
+  // Handling company form changes
+  // Handling company form changes
 
-  // Prepare data
-  const apis = {
-    firstName,
-    lastName,
-    username,
-    email,
-    companyName,
-    companyType,
-    password
+  const handleChangeCompanyFirstName = (e) => {
+    const { name, value } = e.target;
+    companydispatch({ type: COMPANY_ACTIONS.SET_FIRST_NAME, payload: value });
   };
 
-  console.log("Sending data:", apis);
+  const handleChangeCompanyLastName = (e) => {
+    const { name, value } = e.target;
+    companydispatch({ type: COMPANY_ACTIONS.SET_LAST_NAME, payload: value });
+  };
 
-  try {
-    const response = await axios.post("http://localhost:4000/api/company/register", apis);
+  const handleChangeCompanyUsername = (e) => {
+    const { name, value } = e.target;
+    companydispatch({ type: COMPANY_ACTIONS.SET_USERNAME, payload: value });
+  };
 
-    console.log("Response received:", response);
+  const handleChangeCompanyEmail = (e) => {
+    const { name, value } = e.target;
+    companydispatch({ type: COMPANY_ACTIONS.SET_EMAIL, payload: value });
+  };
 
-    if (response.status === 201 || response.status === 200) {
-      const message = response.data.message || "Registration successful!";
-      alert(message);
+  const handleChangeCompanyName = (e) => {
+    const { name, value } = e.target;
+    companydispatch({ type: COMPANY_ACTIONS.SET_COMPANY_NAME, payload: value });
+  };
 
-      // Use setTimeout to ensure alert is shown before redirection
-      setTimeout(() => {
-        window.location.href = "http://localhost:3000/companylogin";
-      }, 1000); 
+  const handleChangeCompanyType = (e) => {
+    const { name, value } = e.target;
+    companydispatch({ type: COMPANY_ACTIONS.SET_COMPANY_TYPE, payload: value });
+  };
 
-      // Reset form
-      companydispatch({ type: COMPANY_ACTIONS.RESET_FORM });
-    } else {
-      console.warn("Unexpected response format:", response);
-      alert("Unexpected response from server. Please try again.");
+  const handleChangeCompanyPassword = (e) => {
+    const { name, value } = e.target;
+    companydispatch({ type: COMPANY_ACTIONS.SET_PASSWORD, payload: value });
+  };
+
+  const handleChangeCompanyConfirmPassword = (e) => {
+    const { name, value } = e.target;
+    companydispatch({ type: COMPANY_ACTIONS.SET_CONFIRM_PASSWORD, payload: value });
+  };
+
+  const handleChangeCompanyCheckbox = (e) => {
+    companydispatch({ type: COMPANY_ACTIONS.SET_CHECKBOX, payload: e.target.checked });
+  };
+
+  // Password visibility toggle
+
+
+  // Submit company form
+  // const companyhandleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const { firstName, lastName, username, email, companyName, companyType, password, confirmPassword, checkbox } = companystate;
+
+  //   if (
+  //     !firstName.trim() || !lastName.trim() || !username.trim() ||  !email.trim() || !companyName.trim() || 
+  //     !companyType.trim() ||    !password.trim() ||    !confirmPassword.trim() ||     checkbox === false
+  //   ) {
+  //     alert("Please fill in all fields");
+  //     return;
+  //   }
+
+
+  //   if (password !== confirmPassword) {
+  //     alert("Passwords do not match");
+  //     return;
+  //   }
+
+
+  //   const apis = {
+  //     firstName,
+  //     lastName,
+  //     username,
+  //     email,
+  //     companyName,
+  //     companyType,
+  //     password,
+  //   };
+
+  //   try {
+  //     const response = await axios.post("http://localhost:4000/api/company/register", apis);
+
+  //     console.log("Response received:", response);
+
+  //     if (response.status === 201 || response.status === 200) {
+  //       if (response.data.message === "Company registered successfully.") {
+  //         alert(response.data.message);
+  //         window.open("http://localhost:3000/login", "_self");
+  //       }
+
+  //       // Reset form
+  //       companydispatch({ type: COMPANY_ACTIONS.RESET_FORM });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error response:", error.response?.data || error.message);
+
+  //     if (error.response?.status === 409) {
+  //       alert("Email or username already exists");
+  //     } else {
+  //       alert("Error: " + (error.response?.data?.message || error.message));
+  //     }
+  //   }
+  // };
+
+  const companyhandleSubmit = async (e) => {
+    e.preventDefault();
+
+    const { firstName, lastName, username, email, companyName, companyType, password, confirmPassword, checkbox } = companystate;
+
+    if (!firstName.trim() || !lastName.trim() || !username.trim() ||
+      !email.trim() || !companyName.trim() || !companyType.trim() ||
+      !password.trim() || !confirmPassword.trim() || checkbox === false) {
+      alert("Please fill in all fields");
+      return;
     }
-  } catch (error) {
-    console.error("Error response:", error.response?.data || error.message);
 
-    if (error.response?.status === 409) {
-      alert("Email or username already exists");
-    } else {
-      alert("Error: " + (error.response?.data?.message || error.message));
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
     }
-  }
-};
+
+    // Prepare data
+    const apis = {
+      firstName,
+      lastName,
+      username,
+      email,
+      companyName,
+      companyType,
+      password
+    };
+
+    console.log("Sending data:", apis);
+
+    try {
+      // const response = await axios.post("http://localhost:4000/api/company/register", apis);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/company/register`, apis);
 
 
-console.log(companystate);
+      console.log("Response received:", response);
+
+      if (response.status === 201 || response.status === 200) {
+        const message = response.data.message || "Registration successful!";
+        alert(message);
+
+        // Use setTimeout to ensure alert is shown before redirection
+        setTimeout(() => {
+          // window.location.href = "http://localhost:3000/companylogin";
+            window.location.href = `${process.env.NEXT_PUBLIC_FRONT_END_URL}/companylogin`;
+
+        }, 1000);
+
+        // Reset form
+        companydispatch({ type: COMPANY_ACTIONS.RESET_FORM });
+      } else {
+        console.warn("Unexpected response format:", response);
+        alert("Unexpected response from server. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error response:", error.response?.data || error.message);
+
+      if (error.response?.status === 409) {
+        alert("Email or username already exists");
+      } else {
+        alert("Error: " + (error.response?.data?.message || error.message));
+      }
+    }
+  };
+
+
+  // console.log(companystate);
+
+  // console.log("Backend URL:", process.env.NEXT_PUBLIC_BACK_END_URL);
 
 
 
@@ -453,8 +467,6 @@ console.log(companystate);
 
 
 
-
-  
   return (
     <Layout>
       <div className="register-area pt-120 mb-120">
@@ -634,7 +646,7 @@ console.log(companystate);
                           <div className="col-md-12">
                             <div className="form-agreement form-inner d-flex justify-content-between flex-wrap">
                               <div className="form-group two">
-                                <input type="checkbox" id="html1" checked={state.checkbox} onClick={handleChangeChechbox}/>
+                                <input type="checkbox" id="html1" checked={state.checkbox} onClick={handleChangeChechbox} />
                                 <label htmlFor="html1">
                                   Here, I will agree company terms &amp;
                                   conditions.
@@ -659,7 +671,7 @@ console.log(companystate);
                           <div className="login-difarent-way ">
                             <div className="row justify-content-center">
                               <div className="col-md-6 text-center">
-                                <a  onClick={Signup}>
+                                <a onClick={Signup}>
                                   <img
                                     src="assets/images/icon/google1.svg"
                                     alt=""
@@ -794,8 +806,8 @@ console.log(companystate);
                                   alt=""
                                 />
                                 <select className="select1"
-                                value={companystate.companyType}
-                                onChange={handleChangeCompanyType}
+                                  value={companystate.companyType}
+                                  onChange={handleChangeCompanyType}
                                 >
                                   <option value="Digital Agency">Digital Agency</option>
                                   <option value="Digital Marketing Agency">
@@ -860,10 +872,10 @@ console.log(companystate);
                           <div className="col-md-12">
                             <div className="form-agreement form-inner d-flex justify-content-between flex-wrap">
                               <div className="form-group two">
-                                <input type="checkbox" id="html" 
-                                checked={companystate.checkbox}
-                                onChange={handleChangeCompanyCheckbox}
-                    
+                                <input type="checkbox" id="html"
+                                  checked={companystate.checkbox}
+                                  onChange={handleChangeCompanyCheckbox}
+
                                 />
                                 <label htmlFor="html">
                                   Here, I will agree company terms &amp;

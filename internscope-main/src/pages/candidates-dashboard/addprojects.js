@@ -39,7 +39,7 @@ function MyProfile() {
           return;
         }
   
-        const projectResponse = await axios.get("http://localhost:4000/api/user/projects", {
+        const projectResponse = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/user/projects`, {
           headers: { Authorization: `Bearer ${token}` },
         });
   
@@ -284,7 +284,7 @@ function MyProfile() {
 
       console.log("Sending data:", projectData); // Debugging: Log the data before sending
 
-      const response = await axios.post("http://localhost:4000/api/user/projects", projectData, {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/user/projects`, projectData, {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       });
 
