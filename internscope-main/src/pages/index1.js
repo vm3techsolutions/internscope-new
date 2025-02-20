@@ -30,4 +30,4 @@ export default function Index1() {
   );
 }
 
-export default Index1;
+// export default Index1;
