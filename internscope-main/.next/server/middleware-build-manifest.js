@@ -20,6 +20,36 @@ self.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/candidates-dashboard/addeducation": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/candidates-dashboard/addeducation.js"
+    ],
+    "/candidates-dashboard/additskills": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/candidates-dashboard/additskills.js"
+    ],
+    "/candidates-dashboard/addprojects": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/candidates-dashboard/addprojects.js"
+    ],
+    "/candidates-dashboard/addskills": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/candidates-dashboard/addskills.js"
+    ],
+    "/candidates-dashboard/dashboard": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/candidates-dashboard/dashboard.js"
+    ],
+    "/candidates-dashboard/my-profile": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/candidates-dashboard/my-profile.js"
+    ],
     "/login": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

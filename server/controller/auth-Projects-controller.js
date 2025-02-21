@@ -1,7 +1,12 @@
 const db = require("../config/db");
 const jwt = require("jsonwebtoken");
 
-// Middleware to authenticate user
+/**
+ * Middleware to authenticate user.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ */
 const authenticateUser = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
 
@@ -18,12 +23,20 @@ const authenticateUser = (req, res, next) => {
   });
 };
 
-// Function to format date for MySQL
+/**
+ * Formats a date string for MySQL.
+ * @param {string} isoString - The ISO date string.
+ * @returns {string} - The formatted date string.
+ */
 const formatDateForMySQL = (isoString) => {
   return new Date(isoString).toISOString().slice(0, 19).replace("T", " ");
 };
 
-// Add or update project
+/**
+ * Adds or updates a project.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 const postProject = async (req, res) => {
   console.log("Received Project Data:", req.body);
   console.log("Authenticated User:", req.user);
@@ -132,7 +145,11 @@ const postProject = async (req, res) => {
   }
 };
 
-// Get all projects for a user
+/**
+ * Retrieves all projects for a user.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 const getProjects = async (req, res) => {
   const userId = req.user.id;
 
@@ -151,7 +168,11 @@ const getProjects = async (req, res) => {
   }
 };
 
-// Delete a project
+/**
+ * Deletes a project.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 const deleteProject = async (req, res) => {
   console.log("Received request to delete project:", req.params);
 

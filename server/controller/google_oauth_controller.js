@@ -36,13 +36,20 @@ passport.use(new GoogleStrategy({
 
 //data read and store in session
 
+/**
+ * Serializes user data into the session.
+ * @param {Object} user - The user object.
+ * @param {Function} cb - The callback function.
+ */
 passport.serializeUser(function(user,cb){
     cb(null,user);
 });
 
-
-
-
+/**
+ * Deserializes user data from the session.
+ * @param {Object} obj - The session object.
+ * @param {Function} cb - The callback function.
+ */
 passport.deserializeUser(function(obj,cb){
     cb(null,obj);
 });
@@ -53,9 +60,21 @@ passport.deserializeUser(function(obj,cb){
 app.use(express.static(path.join(__dirname,"public")))
 
 // apis
+
+/**
+ * Renders the login page.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 app.get("/login",(req,res)=>{
     res.render(path.join(__dirname,"login.ejs"))
 })
+
+/**
+ * Renders the dashboard page.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 app.get("/dashboard",(req,res)=>{
     // const data="rutik"
     // console.log(req.user);
@@ -82,6 +101,10 @@ app.get("/dashboard",(req,res)=>{
 
 
 //passport is middle ware 
+
+/**
+ * Initiates Google OAuth authentication.
+ */
 app.get("/auth/google",passport.authenticate("google",{scope:["profile","email"]}));
 
 // const data={
@@ -92,6 +115,9 @@ app.get("/auth/google",passport.authenticate("google",{scope:["profile","email"]
 // let{name,family_name,email}=data;
 // console.log(name);
 
+/**
+ * Handles the Google OAuth callback.
+ */
 app.get("/auth/google/callback", passport.authenticate("google",{failureRedirect:"/login"}),
 
  function(req,res){
@@ -107,20 +133,11 @@ app.get("/auth/google/callback", passport.authenticate("google",{failureRedirect
 
 )
 
-// app.get("/logout",(req,res)=>{
-//     req.logout(function(err){
-//         if(err){
-//             console.log(err);
-            
-//         }else{
-//             res.redirect("/login");
-//         }
-//     })
-//         // console.log(req);      
-
-// })
-
-
+/**
+ * Logs out the user.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 app.get("/logout",(req,res)=>{
     req.logout(function(err){
         // req.session.destroy()

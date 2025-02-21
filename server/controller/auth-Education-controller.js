@@ -1,5 +1,12 @@
 const db = require("../config/db");
 const jwt = require("jsonwebtoken");
+
+/**
+ * Middleware to authenticate the user using JWT.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ */
 const authenticateUser = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
 
@@ -18,235 +25,11 @@ const authenticateUser = (req, res, next) => {
   });
 };
 
-// const postEducation = async (req, res) => {
-//   console.log("Received Education Data:", req.body);
-//   console.log("Authenticated User:", req.user);
-
-//   if (!req.user) {
-//     return res.status(401).json({ error: "Unauthorized" });
-//   }
-
-//   const {
-//     degree,
-//     major,
-//     institution,
-//     gpa,
-//     start_date,
-//     end_date,
-//   } = req.body;
-
-//   const userId = req.user.id;
-
-//   try {
-//     // Check if the user already has education data
-//     const [existingEducation] = await db.query(
-//       "SELECT * FROM education WHERE user_id = ?",
-//       [userId]
-//     );
-
-//     if (existingEducation.length > 0) {
-//       // Update education record
-//       await db.query(
-//         `UPDATE education SET 
-//           degree = ?, major = ?, institution = ?, gpa = ?, start_date = ?, end_date = ? 
-//         WHERE user_id = ?`,
-//         [
-//           degree,
-//           major,
-//           institution,
-//           gpa,
-//           start_date,
-//           end_date,
-//           userId,
-//         ]
-//       );
-//       return res.json({ success: true, message: "Education updated successfully." });
-//     } else {
-//       // Insert new education record
-//       await db.query(
-//         `INSERT INTO education (
-//           user_id, degree, major, institution, gpa, start_date, end_date
-//         ) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-//         [
-//           userId,
-//           degree,
-//           major,
-//           institution,
-//           gpa,
-//           start_date,
-//           end_date,
-//         ]
-//       );
-//       return res.json({ success: true, message: "Education added successfully." });
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     return res.status(500).json({ error: "Internal Server Error" });
-//   }
-// };
-
-
-// const postEducation = async (req, res) => {
-//   console.log("Received Education Data:", req.body);
-//   console.log("Authenticated User:", req.user);
-
-//   console.log(req.body[0]);
-  
-//   // const education=req.body
-//   // console.log(education);
-  
-  
-//   if (!req.user) {
-//     return res.status(401).json({ error: "Unauthorized" });
-//   }
-
-//   const {
-//     degree,
-//     major,
-//     institution,
-//     gpa,
-//     start_date,
-//     end_date,
-//   } = req.body[0];
-
-//   const userId = req.user.id;
-//   console.log(degree);
-  
-
-//   // Validate input fields
-//   if (!degree || !major || !institution || !gpa || !start_date || !end_date) {
-//     return res.status(400).json({ error: "All fields are required" });
-//   }
-
-//   try {
-//     // Check if the user already has education data
-//     const [existingEducation] = await db.query(
-//       "SELECT * FROM education WHERE user_id = ?",
-//       [userId]
-//     );
-
-//     if (existingEducation.length > 0) {
-//       // Update education record
-//       await db.query(
-//         `UPDATE education SET 
-//           degree = ?, major = ?, institution = ?, gpa = ?, start_date = ?, end_date = ? 
-//         WHERE user_id = ?`,
-//         [
-//           degree,
-//           major,
-//           institution,
-//           gpa,
-//           start_date,
-//           end_date,
-//           userId,
-//         ]
-//       );
-//       return res.json({ success: true, message: "Education updated successfully." });
-//     } else {
-//       // Insert new education record
-//       await db.query(
-//         `INSERT INTO education (
-//           user_id, degree, major, institution, gpa, start_date, end_date
-//         ) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-//         [
-//           userId,
-//           degree,
-//           major,
-//           institution,
-//           gpa,
-//           start_date,
-//           end_date,
-//         ]
-//       );
-//       return res.json({ success: true, message: "Education added successfully." });
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     return res.status(500).json({ error: "Internal Server Error" });
-//   }
-// };
-// const postEducation = async (req, res) => {
-//   console.log("Received Education Data:", req.body);
-//   console.log("Authenticated User:", req.user);
-
-//   if (!req.user) {
-//     return res.status(401).json({ error: "Unauthorized" });
-//   }
-
-//   const {
-//     degree,
-//     major,
-//     institution,
-//     gpa,
-//     start_date,
-//     end_date,
-//   } = req.body[0];
-
-//   const userId = req.user.id;
-
-//   // Validate input fields
-//   if (!degree || !major || !institution || !gpa || !start_date || !end_date) {
-//     return res.status(400).json({ error: "All fields are required" });
-//   }
-
-//   // Function to format date for MySQL
-//   const formatDateForMySQL = (isoString) => {
-//     return new Date(isoString).toISOString().slice(0, 19).replace("T", " ");
-//   };
-
-//   const formattedStartDate = formatDateForMySQL(start_date);
-//   const formattedEndDate = formatDateForMySQL(end_date);
-
-//   try {
-//     // Check if the user already has education data
-//     const [existingEducation] = await db.query(
-//       "SELECT * FROM education WHERE user_id = ?",
-//       [userId]
-//     );
-
-//     if (existingEducation.length > 0) {
-//       // Update education record
-//       await db.query(
-//         `UPDATE education SET 
-//           degree = ?, major = ?, institution = ?, gpa = ?, start_date = ?, end_date = ? 
-//         WHERE user_id = ?`,
-//         [
-//           degree,
-//           major,
-//           institution,
-//           gpa,
-//           formattedStartDate,
-//           formattedEndDate,
-//           userId,
-//         ]
-//       );
-//       return res.json({ success: true, message: "Education updated successfully." });
-//     } else {
-//       // Insert new education record
-//       await db.query(
-//         `INSERT INTO education (
-//           user_id, degree, major, institution, gpa, start_date, end_date
-//         ) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-//         [
-//           userId,
-//           degree,
-//           major,
-//           institution,
-//           gpa,
-//           formattedStartDate,
-//           formattedEndDate,
-//         ]
-//       );
-//       return res.json({ success: true, message: "Education added successfully." });
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     return res.status(500).json({ error: "Internal Server Error" });
-//   }
-// };
-
-
-
+/**
+ * Controller to handle posting education data.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 const postEducation = async (req, res) => {
   console.log("Received Education Data:", req.body);
   console.log("Authenticated User:", req.user);
@@ -322,7 +105,11 @@ const postEducation = async (req, res) => {
   }
 };
 
-
+/**
+ * Controller to handle fetching education data.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 const getEducation = async (req, res) => {
   const userId = req.user.id;
 
@@ -342,6 +129,11 @@ const getEducation = async (req, res) => {
   }
 };
 
+/**
+ * Controller to handle deleting education data.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 const deleteEducation = async (req, res) => {
   console.log("Received request to delete education:", req.params);
 

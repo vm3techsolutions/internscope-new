@@ -184,19 +184,7 @@ function Register() {
 
     console.log(state);
 
-    // const formData=new FormData(); 
-    // formData.append("firstName",firstName);
-    // formData.append("lastName",lastName);
-    // formData.append("username",username);
-    // formData.append("email",email);
-    // formData.append("password",password);
-
-    // const [mystate,setmystate]=useState({
-    //   firstName:firstName,
-    //   lastName:lastName
-    // })
-    // console.log(mystate);
-
+   
     const apis = {
       firstName: firstName,
       lastName: lastName,
@@ -328,63 +316,6 @@ function Register() {
     companydispatch({ type: COMPANY_ACTIONS.SET_CHECKBOX, payload: e.target.checked });
   };
 
-  // Password visibility toggle
-
-
-  // Submit company form
-  // const companyhandleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const { firstName, lastName, username, email, companyName, companyType, password, confirmPassword, checkbox } = companystate;
-
-  //   if (
-  //     !firstName.trim() || !lastName.trim() || !username.trim() ||  !email.trim() || !companyName.trim() || 
-  //     !companyType.trim() ||    !password.trim() ||    !confirmPassword.trim() ||     checkbox === false
-  //   ) {
-  //     alert("Please fill in all fields");
-  //     return;
-  //   }
-
-
-  //   if (password !== confirmPassword) {
-  //     alert("Passwords do not match");
-  //     return;
-  //   }
-
-
-  //   const apis = {
-  //     firstName,
-  //     lastName,
-  //     username,
-  //     email,
-  //     companyName,
-  //     companyType,
-  //     password,
-  //   };
-
-  //   try {
-  //     const response = await axios.post("http://localhost:4000/api/company/register", apis);
-
-  //     console.log("Response received:", response);
-
-  //     if (response.status === 201 || response.status === 200) {
-  //       if (response.data.message === "Company registered successfully.") {
-  //         alert(response.data.message);
-  //         window.open("http://localhost:3000/login", "_self");
-  //       }
-
-  //       // Reset form
-  //       companydispatch({ type: COMPANY_ACTIONS.RESET_FORM });
-  //     }
-  //   } catch (error) {
-  //     console.error("Error response:", error.response?.data || error.message);
-
-  //     if (error.response?.status === 409) {
-  //       alert("Email or username already exists");
-  //     } else {
-  //       alert("Error: " + (error.response?.data?.message || error.message));
-  //     }
-  //   }
-  // };
 
   const companyhandleSubmit = async (e) => {
     e.preventDefault();
@@ -453,9 +384,6 @@ function Register() {
 
 
   // console.log(companystate);
-
-  // console.log("Backend URL:", process.env.NEXT_PUBLIC_BACK_END_URL);
-
 
 
 

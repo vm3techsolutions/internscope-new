@@ -8,6 +8,11 @@ require('dotenv').config();
 // import jwt from "jsonwebtoken" 
 const jwt = require('jsonwebtoken')
 
+/**
+ * Registers a new company.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 const registerCompany = async (req, res) => {
     const schema = Joi.object({
         firstName: Joi.string().required(),
@@ -55,38 +60,11 @@ const registerCompany = async (req, res) => {
     }
 };
 
-
-// const companyLogin = async (req, res) => {
-//     const { email, password } = req.body;
-  
-//     try {
-//       const [companies] = await db.query("SELECT * FROM companies WHERE email = ?", [email]);
-  
-//       if (companies.length === 0) {
-//         return res.status(404).json({ success: false, error: "Company not found" });
-//       }
-  
-//       const company = companies[0];
-//       const isMatch = await bcrypt.compare(password, company.password);
-  
-//       if (!isMatch) {
-//         return res.status(401).json({ success: false, error: "Invalid credentials" });
-//       }
-  
-//       const token = jwt.sign({ id: company.id, email: company.email }, process.env.JWT_SECRET, { expiresIn: '3h' });
-  
-//       res.status(200).json({
-//         success: true,
-//         message: "Company Login successful",
-//         token: token,
-//         company: { id: company.id, companyName: company.companyName, email: company.email }
-//       });
-//     } catch (err) {
-//       console.error(err);
-//       res.status(500).json({ success: false, error: "An error occurred" });
-//     }
-//   };
-  
+/**
+ * Logs in a company.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 const login = async (req, res) => {
     const { email, password } = req.body;
     console.log(email);
@@ -124,8 +102,12 @@ const login = async (req, res) => {
     }
   };
 
-
-  const getManualDashboardData = async (req, res) => {
+/**
+ * Retrieves manual dashboard data for a company.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
+const getManualDashboardData = async (req, res) => {
     const token = req.headers.authorization?.split(" ")[1]; // Extract token from Bearer header
   
     if (!token) {
@@ -146,28 +128,13 @@ const login = async (req, res) => {
       res.status(500).json({ error: "An error occurred while processing your request." });
     }
   };
-//   const getManualDashboardData = async (req, res) => {
-//     const token = req.headers.authorization?.split(" ")[1];
 
-//     if (!token) {
-//         return res.status(401).json({ error: "Not authenticated" });
-//     }
-
-//     try {
-//         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//         const [users] = await db.query("SELECT * FROM companies WHERE id = ?", [decoded.id]);
-
-//         if (users.length === 0) {
-//             return res.status(404).json({ error: "User not found" });
-//         }
-
-//         res.status(200).json({ message: "User dashboard data", user: users[0] });
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ error: "An error occurred." });
-//     }
-// };
-
+/**
+ * Logs out a company.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ */
 const getLogOut= async (req,res,next)=>{
 
   req.logout(function(err){
